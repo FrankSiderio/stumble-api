@@ -2,20 +2,21 @@
 
 /*
 |--------------------------------------------------------------------------
-| Factory
+| GameSeeder
 |--------------------------------------------------------------------------
 |
-| Factories are used to define blueprints for database tables or Lucid
-| models. Later you can use these blueprints to seed your database
-| with dummy data.
+| Make use of the Factory instance to seed database with dummy data or
+| make use of Lucid models directly.
 |
 */
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory')
 
-Factory.blueprint('App/Models/Game', (faker) => {
-  return {
-    name: faker.word()
+class GameSeeder {
+  async run () {
+    await Factory.model('App/Models/Game').create({ name: 'Kings' })
   }
-})
+}
+
+module.exports = GameSeeder
