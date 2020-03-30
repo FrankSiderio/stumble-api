@@ -7,7 +7,7 @@ class GameSchema extends Schema {
   up () {
     this.create('games', (table) => {
       table.increments()
-      table.string('name')
+      table.string('name').unique()
       table.timestamps()
     })
   }

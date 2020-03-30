@@ -19,3 +19,10 @@ const Route = use('Route')
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
+
+Route.post('/player', 'PlayerController.store')
+
+Route.get('/games', 'GameController.index')
+
+Route.post('/match', 'MatchController.store')
+Route.get('/match/:identifier', 'MatchController.show')

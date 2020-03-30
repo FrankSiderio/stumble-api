@@ -10,7 +10,7 @@ class MatchSchema extends Schema {
       table.integer('game').unsigned().references('id').on('games')
       table.integer('owner').unsigned().references('id').on('players')
       table.integer('turnIndex')
-      table.string('identifier')
+      table.string('identifier').unique()
       table.json('cards')
       table.json('players')
       table.timestamps()
