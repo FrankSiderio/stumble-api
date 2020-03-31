@@ -8,7 +8,7 @@ class RuleSchema extends Schema {
     this.create('rules', (table) => {
       table.increments()
       table.text('description')
-      table.json('card')
+      table.string('card')
       table.integer('game').unsigned().references('id').on('games')
       table.timestamps()
     })

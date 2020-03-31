@@ -1,13 +1,16 @@
 'use strict'
 
 class Deck {
-  constructor(){
+  suits = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
+  values = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King'];
+
+  constructor() {
     this.deck = [];
     this.reset();
     this.shuffle();
   }
 
-  toJson() {
+  toStringJson() {
     return JSON.stringify(this.deck)
   }
 

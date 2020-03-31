@@ -12,7 +12,6 @@ class MatchSchema extends Schema {
       table.integer('turnIndex')
       table.string('identifier').unique()
       table.json('cards')
-      table.json('players')
       table.timestamps()
     })
   }

@@ -26,3 +26,5 @@ Route.get('/games', 'GameController.index')
 
 Route.post('/match', 'MatchController.store')
 Route.get('/match/:identifier', 'MatchController.show')
+Route.post('/match/join', 'MatchController.modify')
+Route.post('/match/deal', 'MatchController.deal')
