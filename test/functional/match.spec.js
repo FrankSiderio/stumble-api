@@ -23,8 +23,6 @@ test('create a match', async ({ client }) => {
   response.assertStatus(200)
   response.assertJSONSubset({
     match: {
-      game: game.id,
-      owner: player.id,
       turnIndex: 0
     }
   })
@@ -45,9 +43,8 @@ test('get a match', async ({ client }) => {
 
   response.assertStatus(200)
   response.assertJSONSubset({
-    game: game.id,
-    owner: player.id,
-    turnIndex: 0
+    turnIndex: 0,
+    identifier: '1234'
   })
 })
 
@@ -94,6 +91,5 @@ test('deal a card', async ({ client }) => {
   const response = await client.post('/match/deal')
     .send({ match: match.identifier }).end()
 
-    console.log(response)
   response.assertStatus(200)
 })
