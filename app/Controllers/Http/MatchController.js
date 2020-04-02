@@ -4,7 +4,7 @@ const Deck = use('App/Deck')
 const PlayerMatch = use('App/Models/PlayerMatch')
 const Player = use('App/Models/Player')
 const Rule = use('App/Models/Rule')
-const characters = '123456789abcdefghijklmnop'
+const characters = '123456789abcdefghijklmnopqrstuvwxyz'
 
 class MatchController {
 
