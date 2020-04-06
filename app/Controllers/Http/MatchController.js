@@ -14,6 +14,7 @@ class MatchController {
       .with('createdBy')
       .with('drinkingGame')
       .with('players')
+      .with('latestCard')
       .fetch()
 
     return match.first()
@@ -55,7 +56,6 @@ class MatchController {
     const match = await Match.findByOrFail('identifier', request.input('match'))
     const deck = new Deck()
     deck.deck = JSON.parse(match.cards)
-    console.log(JSON.parse(match.cards))
     // Deal a card
     // Remove that card from the deck 
     // UPDATE THE DECK BRO
@@ -67,17 +67,20 @@ class MatchController {
     } else {
       match.turnIndex++
     }
-
-    await match.save()
-    // TODO: Notify players that card was dealt
-    // Return that card with its given rule
-    console.log(dealtCard)
     const rule = await Rule.query().where('card', dealtCard).where('game', match.game).fetch()
+    match.latestRule = rule.toJSON()[0].id
+    await match.save() 
+    
+    // Return the updated match
+    const matchToReturn = await Match.query()
+      .where('identifier', '=', match.identifier)
+      .with('createdBy')
+      .with('drinkingGame')
+      .with('players')
+      .with('latestCard')
+    .fetch()
 
-    return {
-      turnIndex: match.turnIndex,
-      rule
-    }
+    return matchToReturn.first()
   }
 
   randomString(length, characters) {

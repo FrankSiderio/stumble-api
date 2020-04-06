@@ -21,6 +21,10 @@ class Match extends Model {
     return this.belongsToMany('App/Models/Player').pivotTable('player_matches')
   }
 
+  latestCard() {
+    return this.belongsTo('App/Models/Rule', 'latestRule')
+  }
+
 }
 
 module.exports = Match

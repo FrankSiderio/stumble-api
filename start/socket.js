@@ -9,15 +9,13 @@ io.on('connection', (socket) => {
     io.emit('chat message', msg);
   });
 
-  socket.on('dealt a card', () => {
+  socket.on('dealt a card', (match) => {
     axios.post('http://127.0.0.1:3333/match/deal', {
-      match: 'mpfaom6dj8pe2geckjnl'
-    })
-    .then((res) => {
+      match: match
+    }).then((res) => {
       console.log(res.data)
       io.emit('dealt a card', res.data)
-    })
-    .catch((error) => {
+    }).catch((error) => {
       console.error(error)
     })
   })

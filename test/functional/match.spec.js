@@ -49,7 +49,7 @@ test('get a match', async ({ client }) => {
 })
 
 test('add a player', async ({ client }) => {
-  const game = await Game.create({ name: 'Your Mom' })
+  const game = await Game.create({ name: 'Cheers to the Governor' })
   const player = await Player.create({ name: 'Fletcher Cox In Your Face' })
   const newPlayer = await Player.create({ name: 'Jason Kelce' })
   const match = await Match.create({
@@ -68,7 +68,7 @@ test('add a player', async ({ client }) => {
 })
 
 test('deal a card', async ({ client }) => {
-  const game = await Game.create({ name: 'Your Dad' })
+  const game = await Game.findByOrFail('name', 'Kings')
   const player = await Player.create({ name: 'Fletcher Cox In Your Face' })
   const newPlayer = await Player.create({ name: 'Jason Kelce' })
   const match = await Match.create({
@@ -90,6 +90,6 @@ test('deal a card', async ({ client }) => {
 
   const response = await client.post('/match/deal')
     .send({ match: match.identifier }).end()
-
+  // console.log(response)
   response.assertStatus(200)
 })

@@ -7,13 +7,13 @@ trait('Test/ApiClient')
 
 test('get list of games', async ({ client }) => {
   await Game.create({
-    name: 'Kings'
+    name: 'Your Mom'
   })
 
   const response = await client.get('/games').end()
 
   response.assertStatus(200)
   response.assertJSONSubset([{
-    name: 'Kings'
+    name: 'Your Mom'
   }])
 })
