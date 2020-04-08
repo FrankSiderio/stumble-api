@@ -1,25 +1,21 @@
 const Server = use('Server')
 const io = use('socket.io')(Server.getInstance())
 const axios = require('axios')
+const Env = use('Env')
 
-io.on('connection', (socket) => {
-  console.log('Connected')
-  socket.on('chat message', (msg) => {
-    console.log(`Got chat message: ${msg}`)
-    io.emit('chat message', msg);
-  });
+io.on('connection', async (socket) => {
+  const room = socket.handshake['query']['match'];
+  socket.join(room);
+  console.log(`user joined room #: ${room}`);
+  io.to(room).emit('player joined', '') // Idk if we have anything to send
 
   socket.on('dealt a card', (match) => {
-    axios.post('http://127.0.0.1:3333/match/deal', {
-      match: match
-    }).then((res) => {
-      console.log(res.data)
-      io.emit('dealt a card', res.data)
-    }).catch((error) => {
-      console.error(error)
-    })
+    axios.post(`http://${Env.get('HOST')}:${Env.get('PORT')}/match/deal`, { match: match }).then((response) => {
+      io.to(room).emit('dealt a card', response.data);
+    }).catch((error) => { console.log(error) })
   })
 
+  // TODO: Remove player from match when user disconnects
   socket.on('disconnect', () => {
     console.log('User disconnected')
   })
