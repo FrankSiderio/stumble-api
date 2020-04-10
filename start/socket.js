@@ -10,7 +10,7 @@ io.on('connection', async (socket) => {
   io.to(room).emit('player joined', '') // Idk if we have anything to send
 
   socket.on('dealt a card', (match) => {
-    axios.post(`http://${Env.get('HOST')}:${Env.get('PORT')}/match/deal`, { match: match }).then((response) => {
+    axios.post(`${Env.get('APP_URL')}/match/deal`, { match: match }).then((response) => {
       io.to(room).emit('dealt a card', response.data);
     }).catch((error) => { console.log(error) })
   })
