@@ -36,7 +36,7 @@ test('get a match', async ({ client }) => {
     owner: player.id,
     cards: JSON.stringify(['']),
     turnIndex: 0,
-    identifier: '1234'
+    identifier: 1234
   })
 
   const response = await client.get(`/match/${match.identifier}`).end()
@@ -44,7 +44,7 @@ test('get a match', async ({ client }) => {
   response.assertStatus(200)
   response.assertJSONSubset({
     turnIndex: 0,
-    identifier: '1234'
+    identifier: 1234
   })
 })
 
@@ -57,7 +57,7 @@ test('add a player', async ({ client }) => {
     owner: player.id,
     cards: JSON.stringify(['']),
     turnIndex: 0,
-    identifier: '12345'
+    identifier: 12345
   })
 
   const response = await client.post('/match/join')
@@ -76,7 +76,7 @@ test('deal a card', async ({ client }) => {
     owner: player.id,
     cards: new Deck().toStringJson(),
     turnIndex: 0,
-    identifier: '123456'
+    identifier: 123456
   })
   await PlayerMatch.create({
     player_id: player.id,
@@ -93,3 +93,31 @@ test('deal a card', async ({ client }) => {
   // console.log(response)
   response.assertStatus(200)
 })
+
+test('complate a turn', async ({ client }) => {
+  const game = await Game.findByOrFail('name', 'Kings')
+  const player = await Player.create({ name: 'Fletcher Cox In Your Face' })
+  const newPlayer = await Player.create({ name: 'Jason Kelce' })
+  const match = await Match.create({
+    game: game.id,
+    owner: player.id,
+    cards: new Deck().toStringJson(),
+    turnIndex: 0,
+    identifier: 2343
+  })
+  await PlayerMatch.create({
+    player_id: player.id,
+    match_id: match.id
+  })
+
+  await PlayerMatch.create({
+    player_id: newPlayer.id,
+    match_id: match.id
+  })
+
+  const response = await client.post('/match/complete')
+    .send({ match: match.identifier }).end()
+  console.log(response)
+  response.assertStatus(200)
+})
+

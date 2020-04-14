@@ -4,7 +4,6 @@ const Deck = use('App/Deck')
 const PlayerMatch = use('App/Models/PlayerMatch')
 const Player = use('App/Models/Player')
 const Rule = use('App/Models/Rule')
-const characters = '123456789abcdefghijklmnopqrstuvwxyz'
 
 class MatchController {
 
@@ -26,7 +25,7 @@ class MatchController {
       owner: request.input('owner'),
       turnIndex: 0,
       cards: new Deck().toStringJson(),
-      identifier: this.randomString(20, characters)
+      identifier: Math.floor(Math.random() * 10000)
     })
 
     await PlayerMatch.create({
@@ -61,16 +60,11 @@ class MatchController {
     // UPDATE THE DECK BRO
     const dealtCard = deck.deal()
     match.cards = JSON.stringify(deck.deck)
-    // Update the turnIndex
-    if (await match.players().getCount() == match.turnIndex + 1) {
-      match.turnIndex = 0
-    } else {
-      match.turnIndex++
-    }
+
     const rule = await Rule.query().where('card', dealtCard).where('game', match.game).fetch()
     match.latestRule = rule.toJSON()[0].id
-    await match.save() 
-    
+    await match.save()
+
     // Return the updated match
     const matchToReturn = await Match.query()
       .where('identifier', '=', match.identifier)
@@ -78,17 +72,31 @@ class MatchController {
       .with('drinkingGame')
       .with('players')
       .with('latestCard')
-    .fetch()
+      .fetch()
 
     return matchToReturn.first()
   }
 
-  randomString(length, characters) {
-    var randomString = ''
-    for (var i = length; i > 0; i--) {
-      randomString += characters[Math.floor(Math.random() * characters.length)]
+  async complete({ request }) {
+    const match = await Match.findByOrFail('identifier', request.input('match'))
+
+    // Update the turnIndex
+    if (await match.players().getCount() == match.turnIndex + 1) {
+      match.turnIndex = 0
+    } else {
+      match.turnIndex++
     }
-    return randomString
+
+    await match.save()
+
+    return {
+      identifier: match.identifier,
+      turnIndex: match.turnIndex,
+      createdby: await match.createdBy().fetch(),
+      drinkingGame: await match.drinkingGame().fetch(),
+      players: await match.players().fetch(),
+      latestCard: await match.latestCard().fetch()
+    }
   }
 }
 
