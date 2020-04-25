@@ -40,7 +40,7 @@ class MatchController {
     const match = await Match.findByOrFail('identifier', request.input('match'))
     const player = await Player.findOrFail(request.input('player'))
 
-    await PlayerMatch.create({
+    await PlayerMatch.findOrCreate({
       match_id: match.id,
       player_id: player.id
     })

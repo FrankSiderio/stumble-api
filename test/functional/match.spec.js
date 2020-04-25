@@ -48,7 +48,7 @@ test('get a match', async ({ client }) => {
   })
 })
 
-test('add a player', async ({ client }) => {
+test('add a player', async ({ client, assert }) => {
   const game = await Game.create({ name: 'Cheers to the Governor' })
   const player = await Player.create({ name: 'Fletcher Cox In Your Face' })
   const newPlayer = await Player.create({ name: 'Jason Kelce' })
@@ -65,6 +65,12 @@ test('add a player', async ({ client }) => {
     .end()
 
   response.assertStatus(200)
+
+  await client.post('/match/join')
+  .send({ player: newPlayer.id, match: match.identifier })
+  .end()
+
+  assert.isTrue(await match.players().getCount() === 1)
 })
 
 test('deal a card', async ({ client }) => {
@@ -117,7 +123,7 @@ test('complate a turn', async ({ client }) => {
 
   const response = await client.post('/match/complete')
     .send({ match: match.identifier }).end()
-  console.log(response)
-  response.assertStatus(200)
+
+    response.assertStatus(200)
 })
 
