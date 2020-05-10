@@ -31,7 +31,7 @@ class GameSeeder {
       deck.values.forEach(card => {
         switch (card) {
           case 'Ace':
-            rules.push({ game: game.id, card: `${card} of ${suit}`, description: 'Waterfall - Time for everyone to drink. In order start chugging and once the person next to you stops you can stop. Ask a general knowledge questiont to determine the direction in which you go.' })
+            rules.push({ game: game.id, card: `${card} of ${suit}`, description: 'Waterfall - Time for everyone to drink. In order start chugging, and once the person next to you stops you can stop. Ask a general knowledge questiont to determine the direction in which you go.' })
             break
           case 2:
             rules.push({ game: game.id, card: `${card} of ${suit}`, description: 'You - Pick someone to drink. Preferably someone you are trying to flirt with. Try hard.' })
@@ -43,10 +43,10 @@ class GameSeeder {
             rules.push({ game: game.id, card: `${card} of ${suit}`, description: 'Floor - Everyone point to the floor. Last person to do it drinks.' })
             break
           case 5:
-            rules.push({ game: game.id, card: `${card} of ${suit}`, description: 'Guys - Anyone who identifies as a male. This is 2020 we do not discriminate.' })
+            rules.push({ game: game.id, card: `${card} of ${suit}`, description: 'Guys - Drive. Good luck.' })
             break
           case 6:
-            rules.push({ game: game.id, card: `${card} of ${suit}`, description: 'Chicks - Anyone who identifies as a female. Putang for the win.' })
+            rules.push({ game: game.id, card: `${card} of ${suit}`, description: 'Chicks and Dicks - Anyone who identifies as female and/or male.' })
             break
           case 7:
             rules.push({ game: game.id, card: `${card} of ${suit}`, description: 'Heaven - Everyone point towards heaven unless you don\'t believe in Jesus. In that case shove it up your butt.' })
