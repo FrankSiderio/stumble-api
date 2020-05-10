@@ -14,6 +14,7 @@ class MatchController {
       .with('drinkingGame')
       .with('players')
       .with('latestCard')
+      .with('drinks')
       .fetch()
 
     return match.first()
@@ -72,6 +73,7 @@ class MatchController {
       .with('drinkingGame')
       .with('players')
       .with('latestCard')
+      .with('drinks')
       .fetch()
 
     return matchToReturn.first()
@@ -95,6 +97,7 @@ class MatchController {
       createdby: await match.createdBy().fetch(),
       drinkingGame: await match.drinkingGame().fetch(),
       players: await match.players().fetch(),
+      drinks: await match.drinks().fetch(),
       latestCard: await match.latestCard().fetch()
     }
   }

@@ -31,7 +31,7 @@ class GameSeeder {
       deck.values.forEach(card => {
         switch (card) {
           case 'Ace':
-            rules.push({ game: game.id, card: `${card} of ${suit}`, description: 'Waterfall - Time for everyone to drink. In order each start chugging and once the person next to you stops you can stop. Ask a general knowledge questiont to determine the direction in which you go.' })
+            rules.push({ game: game.id, card: `${card} of ${suit}`, description: 'Waterfall - Time for everyone to drink. In order start chugging and once the person next to you stops you can stop. Ask a general knowledge questiont to determine the direction in which you go.' })
             break
           case 2:
             rules.push({ game: game.id, card: `${card} of ${suit}`, description: 'You - Pick someone to drink. Preferably someone you are trying to flirt with. Try hard.' })

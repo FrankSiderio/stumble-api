@@ -25,6 +25,10 @@ class Match extends Model {
     return this.belongsTo('App/Models/Rule', 'latestRule')
   }
 
+  drinks() {
+    return this.hasMany('App/Models/Drink')
+  }
+
 }
 
 module.exports = Match
