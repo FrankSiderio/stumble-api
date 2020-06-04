@@ -21,6 +21,7 @@ Route.get('/', () => {
 })
 
 Route.post('/player', 'PlayerController.store')
+Route.put('/player', 'PlayerController.modify')
 
 Route.get('/games', 'GameController.index')
 

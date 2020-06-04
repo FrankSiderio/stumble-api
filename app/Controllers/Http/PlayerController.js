@@ -8,6 +8,18 @@ class PlayerController {
 
     return { player }
   }
+
+  async modify({ request }) {
+    const player = await Player.findByOrFail({
+      name: request.input('currentName'),
+      id: request.input('id')
+    })
+
+    player.name = request.input('newName')
+    await player.save()
+
+    return { player }
+  }
 }
 
 module.exports = PlayerController

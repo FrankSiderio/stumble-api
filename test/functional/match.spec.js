@@ -96,7 +96,7 @@ test('deal a card', async ({ client }) => {
 
   const response = await client.post('/match/deal')
     .send({ match: match.identifier }).end()
-  // console.log(response)
+
   response.assertStatus(200)
 })
 
